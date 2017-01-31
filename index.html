@@ -106,7 +106,12 @@
 
 				// === TODO: Create ray caster
 				var crosshair = new THREE.RingGeometry(0.01, 0.05, 32);
-				var crosshairMaterial
+				var crosshairMaterial = new THREE.MeshBasicMaterial({color: 0xeeee0, opacity: 0.5, transparent: true});
+				var crosshairmesh = new THREE.Mesh(crosshair, crosshairmesh);
+				crosshairmesh.position.z = -2;
+				camera.add(crosshairmesh);
+
+				raycaster = new THREE.Raycaster();
 				
 				// === LOOK: Setup floor
 				geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
@@ -157,7 +162,12 @@
 						continue;
 					}
 
+					selecting = true;
+					selectedCube = intersections[i].object;
+					THREE.SceneUtils.attach(selectedCube, scene, camera);
 					intersections[i].object.material.color.set(0xee0000);
+					window.setTimeout(selectedCube, 3000);
+					break; 
 				}
 
 				renderer.render( scene, camera );
