@@ -105,6 +105,8 @@
 				scene.add( controls.getObject() );
 
 				// === TODO: Create ray caster
+				var crosshair = new THREE.RingGeometry(0.01, 0.05, 32);
+				var crosshairMaterial
 				
 				// === LOOK: Setup floor
 				geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
@@ -145,6 +147,18 @@
 				requestAnimationFrame( animate );
 
 				// TODO: Ray caster
+				var center = new THREE.Vector2();
+				raycaster.setFromCamera(center, camera);
+
+				var intersections = raycaster.intersectObjects(scene.children);
+				for (var i = 0; i < intersections.length; i++) {
+
+					if (intersections[i].object === floor) {
+						continue;
+					}
+
+					intersections[i].object.material.color.set(0xee0000);
+				}
 
 				renderer.render( scene, camera );
 			}
